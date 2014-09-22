@@ -10,6 +10,21 @@
 	<string>46</string>
 	<key>objects</key>
 	<dict>
+		<key>0914064C2E214BD6BE638430</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Pods.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>158B747B95A944A39E12F7B7</key>
 		<dict>
 			<key>buildActionMask</key>
@@ -36,6 +51,30 @@ error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or up
 EOM
     exit 1
 fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>1A81095B21D142AAB0AEF6E3</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Pods-resources.sh"
 </string>
 			<key>showEnvVarsInLog</key>
 			<string>0</string>
@@ -71,11 +110,25 @@ fi
 			<key>showEnvVarsInLog</key>
 			<string>0</string>
 		</dict>
+		<key>3E81A2199E084FD5915602E2</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
 		<key>5CDDBB266DE346E3B7C9749F</key>
 		<dict>
 			<key>children</key>
 			<array>
 				<string>8E69F681276A4294A4DC8272</string>
+				<string>3E81A2199E084FD5915602E2</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -83,6 +136,36 @@ fi
 			<string>Frameworks</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>626B8137F01A45929F0D7FDA</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
 		</dict>
 		<key>8E69F681276A4294A4DC8272</key>
 		<dict>
@@ -112,6 +195,13 @@ fi
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>A6EBB4D0D04E452194A0824F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3E81A2199E084FD5915602E2</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>CF106F2C19D0303B00FFA5D8</key>
 		<dict>
 			<key>children</key>
@@ -121,6 +211,7 @@ fi
 				<string>CF106F3619D0303B00FFA5D8</string>
 				<string>97566E647FE245C284AA7914</string>
 				<string>5CDDBB266DE346E3B7C9749F</string>
+				<string>0914064C2E214BD6BE638430</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -204,6 +295,7 @@ fi
 			<array>
 				<string>CF106F4119D0303B00FFA5D8</string>
 				<string>CF106F3E19D0303B00FFA5D8</string>
+				<string>CF106F6719D0389300FFA5D8</string>
 				<string>CF106F3B19D0303B00FFA5D8</string>
 			</array>
 			<key>isa</key>
@@ -216,7 +308,9 @@ fi
 			<key>buildActionMask</key>
 			<string>2147483647</string>
 			<key>files</key>
-			<array/>
+			<array>
+				<string>A6EBB4D0D04E452194A0824F</string>
+			</array>
 			<key>isa</key>
 			<string>PBXFrameworksBuildPhase</string>
 			<key>runOnlyForDeploymentPostprocessing</key>
@@ -243,9 +337,11 @@ fi
 			<string>CF106F5819D0303C00FFA5D8</string>
 			<key>buildPhases</key>
 			<array>
+				<string>626B8137F01A45929F0D7FDA</string>
 				<string>CF106F3119D0303B00FFA5D8</string>
 				<string>CF106F3219D0303B00FFA5D8</string>
 				<string>CF106F3319D0303B00FFA5D8</string>
+				<string>1A81095B21D142AAB0AEF6E3</string>
 			</array>
 			<key>buildRules</key>
 			<array/>
@@ -300,6 +396,7 @@ fi
 				<string>CF106F4219D0303B00FFA5D8</string>
 				<string>CF106F4519D0303B00FFA5D8</string>
 				<string>CF106F4719D0303B00FFA5D8</string>
+				<string>CF106F5E19D0382500FFA5D8</string>
 				<string>CF106F3819D0303B00FFA5D8</string>
 			</array>
 			<key>isa</key>
@@ -500,6 +597,7 @@ fi
 			<string>2147483647</string>
 			<key>files</key>
 			<array>
+				<string>CF106F6819D038A100FFA5D8</string>
 				<string>CF106F5519D0303C00FFA5D8</string>
 			</array>
 			<key>isa</key>
@@ -805,11 +903,15 @@ fi
 			</array>
 			<key>defaultConfigurationIsVisible</key>
 			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
 			<key>isa</key>
 			<string>XCConfigurationList</string>
 		</dict>
 		<key>CF106F5919D0303C00FFA5D8</key>
 		<dict>
+			<key>baseConfigurationReference</key>
+			<string>0914064C2E214BD6BE638430</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
@@ -828,6 +930,8 @@ fi
 		</dict>
 		<key>CF106F5A19D0303C00FFA5D8</key>
 		<dict>
+			<key>baseConfigurationReference</key>
+			<string>0914064C2E214BD6BE638430</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
@@ -853,6 +957,8 @@ fi
 			</array>
 			<key>defaultConfigurationIsVisible</key>
 			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
 			<key>isa</key>
 			<string>XCConfigurationList</string>
 		</dict>
@@ -914,6 +1020,64 @@ fi
 			<string>XCBuildConfiguration</string>
 			<key>name</key>
 			<string>Release</string>
+		</dict>
+		<key>CF106F5E19D0382500FFA5D8</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>CF106F6519D0389300FFA5D8</string>
+				<string>CF106F6619D0389300FFA5D8</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>RetainCC SDK</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>CF106F6519D0389300FFA5D8</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>RetainCC.h</string>
+			<key>path</key>
+			<string>sdk/RetainCC.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>CF106F6619D0389300FFA5D8</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>RetainCC.m</string>
+			<key>path</key>
+			<string>sdk/RetainCC.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>CF106F6719D0389300FFA5D8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CF106F6619D0389300FFA5D8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>CF106F6819D038A100FFA5D8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CF106F6619D0389300FFA5D8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 	</dict>
 	<key>rootObject</key>
