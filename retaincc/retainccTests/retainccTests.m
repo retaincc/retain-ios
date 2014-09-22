@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import <OHHTTPStubs/OHHTTPStubs.h>
 
 @interface retainccTests : XCTestCase
 
@@ -27,6 +28,22 @@
 
 - (void)testExample {
     // This is an example of a functional test case.
+    
+    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
+        return YES; // Stub ALL requests without any condition
+    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
+        // Stub all those requests with "Hello World!" string
+        NSData* stubData = [@"Hello World!" dataUsingEncoding:NSUTF8StringEncoding];
+        return [OHHTTPStubsResponse responseWithData:stubData statusCode:200 headers:nil];
+    }];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://google.com"]];
+    NSURLResponse *response = nil;
+    NSError *error = nil;
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",result);
+    XCTAssert([result isEqualToString:@"Hello World!"],@"ok");
     XCTAssert(YES, @"Pass");
 }
 

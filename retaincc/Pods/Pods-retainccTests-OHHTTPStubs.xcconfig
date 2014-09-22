@@ -1,0 +1,1 @@
+PODS_RETAINCCTESTS_OHHTTPSTUBS_OTHER_LDFLAGS = -framework CFNetwork -framework Foundation
