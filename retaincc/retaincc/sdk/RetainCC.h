@@ -11,9 +11,12 @@
 @interface RetainCC : NSObject
 
 + (instancetype)sharedInstanceWithApiKey:(NSString*)apiKey appID:(NSString*)appID;
-+ (instancetype)sharedInstance;
++ (instancetype)shared;
 
 - (instancetype)initWithApiKey:(NSString*)apiKey appID:(NSString*)appID;
-- (void)logEventWithName:(NSString*)name properties:(NSDictionary*)dict callback:(void(^)(BOOL success, NSError *error))callback;
+
+- (void)logEventWithName:(NSString*)name properties:(NSDictionary*)dict;
+- (void)identifyWithEmail:(NSString*)email userID:(NSString*)userID;
+- (void)changeUserAttributes:(NSDictionary*)dictionary;
 
 @end

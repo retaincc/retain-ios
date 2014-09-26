@@ -8,11 +8,24 @@
 
 #import "RetainCC.h"
 #import <AFNetworking/AFNetworking.h>
+#include <ifaddrs.h>
+#include <arpa/inet.h>
+
 
 @interface RetainCC ()
 
 @property (nonatomic, strong) NSString *apiKey;
 @property (nonatomic, strong) NSString *appID;
+
+@property (nonatomic, strong) NSString *userID;
+@property (nonatomic, strong) NSString *email;
+
+- (void)logEventWithName:(NSString*)name properties:(NSDictionary*)dict callback:(void(^)(BOOL success, NSError *error))callback;
+- (void)identifyWithEmail:(NSString*)email userID:(NSString*)userID callback:(void(^)(BOOL success, NSError *error))callback;
+- (void)changeUserAttributes:(NSDictionary*)dictionary callback:(void(^)(BOOL success, NSError *error))callback;
+
+- (AFHTTPRequestOperationManager*)prepareManager;
+- (NSString *)getIPAddress;
 
 @end
 
@@ -27,7 +40,7 @@ static RetainCC *sharedInstance = nil;
     }
     return sharedInstance;
 }
-+ (instancetype)sharedInstance{
++ (instancetype)shared{
     if (!sharedInstance) {
         NSLog(@"You have to call sharedInstanceWithApiKey:appID: before calling sharedInstance");
     }
@@ -43,13 +56,36 @@ static RetainCC *sharedInstance = nil;
     return self;
 }
 
+#pragma mark - public methods
+
+- (void)logEventWithName:(NSString*)name properties:(NSDictionary*)dict {
+    [self logEventWithName:name properties:dict callback:nil];
+}
+
+- (void)identifyWithEmail:(NSString*)email userID:(NSString*)userID {
+    [self identifyWithEmail:email userID:userID callback:nil];
+}
+- (void)changeUserAttributes:(NSDictionary*)dictionary {
+    [self changeUserAttributes:dictionary callback:nil];
+}
+
+#pragma mark - private methods
+
 - (void)logEventWithName:(NSString*)name properties:(NSDictionary*)dict callback:(void(^)(BOOL success, NSError *error))callback {
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
-    [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:self.appID password:self.apiKey];
-    [manager setResponseSerializer: [AFHTTPResponseSerializer serializer]];
+    AFHTTPRequestOperationManager *manager = [self prepareManager];
     [manager.responseSerializer setAcceptableContentTypes: [NSSet setWithObject:@"text/plain"]];
+    
+    NSMutableDictionary *params = @{}.mutableCopy;
+    [params setObject:name forKey:@"event"];
+    if (self.userID) {
+        [params setObject:self.userID forKey:@"user_id"];
+    } else if (self.email) {
+        [params setObject:self.email forKey:@"email"];
+    }
+    if (dict) {
+        [params setObject:dict forKey:@"custom_data"];
+    }
     
     [manager POST:@"https://app.retain.cc/api/v1/events" parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"operation success: %@", operation);
@@ -64,6 +100,104 @@ static RetainCC *sharedInstance = nil;
             callback( NO, error );
         }
     }];
+}
+
+- (void)identifyWithEmail:(NSString*)email userID:(NSString*)userID callback:(void(^)(BOOL success, NSError *error))callback {
+    self.userID = userID;
+    self.email = email;
+}
+
+- (void)changeUserAttributes:(NSDictionary*)dictionary callback:(void(^)(BOOL success, NSError *error))callback {
+    AFHTTPRequestOperationManager *manager = [self prepareManager];
+    
+    NSMutableDictionary *params = @{}.mutableCopy;
+    NSMutableDictionary *customData = @{}.mutableCopy;
+    
+    NSArray *apiFields = @[@"user_id",
+                           @"email",
+                           @"name",
+                           @"created_at",
+                           @"custom_data",
+                           @"last_seen_ip",
+                           @"last_seen_user_agent",
+                           @"companies",
+                           @"last_impression_at",
+                           @"company_id"];
+    
+    
+    for (NSString *key in dictionary) {
+        if ([apiFields containsObject:key]) {
+            [params setObject:[dictionary objectForKey:key] forKey:key];
+        } else {
+            // put it into custom data
+            [customData setObject:[dictionary objectForKey:key] forKey:key];
+        }
+    }
+    
+    [params setObject:customData forKey:@"custom_data"];
+    
+    if (self.userID) {
+        [params setObject:self.userID forKey:@"user_id"];
+    }
+    if (self.email) {
+        [params setObject:self.email forKey:@"email"];
+    }
+    NSString *ipAddress = [self getIPAddress];
+    if (![ipAddress isEqualToString:@"error"]) {
+        [params setObject:ipAddress forKey:@"last_seen_ip"];
+    }
+    
+    [manager POST:@"https://app.retain.cc/api/v1/users" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (callback) {
+            callback(YES, nil);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (callback) {
+            callback(NO, error);
+        }
+    }];
+}
+
+# pragma mark network utility
+
+- (AFHTTPRequestOperationManager*)prepareManager {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
+    [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:self.appID password:self.apiKey];
+    [manager setResponseSerializer: [AFHTTPResponseSerializer serializer]];
+    
+    return manager;
+}
+
+- (NSString *)getIPAddress {
+    
+    NSString *address = @"error";
+    struct ifaddrs *interfaces = NULL;
+    struct ifaddrs *temp_addr = NULL;
+    int success = 0;
+    // retrieve the current interfaces - returns 0 on success
+    success = getifaddrs(&interfaces);
+    if (success == 0) {
+        // Loop through linked list of interfaces
+        temp_addr = interfaces;
+        while(temp_addr != NULL) {
+            if(temp_addr->ifa_addr->sa_family == AF_INET) {
+                // Check if interface is en0 which is the wifi connection on the iPhone
+                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) {
+                    // Get NSString from C String
+                    address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
+                    
+                }
+                
+            }
+            
+            temp_addr = temp_addr->ifa_next;
+        }
+    }
+    // Free memory
+    freeifaddrs(interfaces);
+    return address;
+    
 }
 
 @end

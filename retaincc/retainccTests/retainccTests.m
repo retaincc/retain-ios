@@ -15,6 +15,15 @@
 
 @end
 
+@interface RetainCC ()
+
+- (void)logEventWithName:(NSString*)name properties:(NSDictionary*)dict callback:(void(^)(BOOL success, NSError *error))callback;
+- (void)identifyWithEmail:(NSString*)email userID:(NSString*)userID callback:(void(^)(BOOL success, NSError *error))callback;
+- (void)changeUserAttributes:(NSDictionary*)dictionary callback:(void(^)(BOOL success, NSError *error))callback;
+
+@end
+
+
 @implementation retainccTests
 
 - (void)setUp {
@@ -49,7 +58,32 @@
 
 - (void)testSendEvent {
     [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-        return [request.URL.absoluteString isEqualToString:@"https://app.retain.cc/api/v1/events"];
+        
+        BOOL shouldApply = [request.URL.absoluteString isEqualToString:@"https://app.retain.cc/api/v1/events"];
+        if (!shouldApply) return NO;
+        
+        NSDictionary *allHeaders = request.allHTTPHeaderFields;
+        // check auth
+        NSString *authString = [allHeaders objectForKey:@"Authorization"];
+        XCTAssert(authString, @"No auth string found");
+        authString = [authString substringFromIndex:[authString rangeOfString:@"Basic "].length];
+        NSData *authData = [[NSData alloc]initWithBase64EncodedString:authString options:0];
+        XCTAssert(authData, @"Auth data is not base63 encoded");
+        NSString *decodedData = [[NSString alloc] initWithData:authData encoding:NSUTF8StringEncoding];
+        XCTAssert([decodedData isEqualToString:@"APP_ID:API_KEY"]);
+        
+        // content type check
+        XCTAssert([[allHeaders objectForKey:@"Content-type"] rangeOfString:@"application/json"].location != NSNotFound,@"Request Content-type should be json");
+        
+        
+        NSLog(@"%@",[[NSString alloc] initWithData:request.HTTPBody encoding:NSUTF8StringEncoding]);
+        NSError *error = nil;
+        NSDictionary *bodyData = [NSJSONSerialization JSONObjectWithData:request.HTTPBody options:kNilOptions error:&error];
+        XCTAssert(!error);
+//        XCTAssert([[bodyData objectForKey:@"KEY1"] isEqualToString:@"VALUE1"]);
+//        XCTAssert([[bodyData objectForKey:@"KEY2"] isEqualToString:@"VALUE2"]);
+        
+        return YES;
     } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
         // Stub all those requests with "Hello World!" string
         NSData* stubData = [@"Hello World!" dataUsingEncoding:NSUTF8StringEncoding];
