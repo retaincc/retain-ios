@@ -87,7 +87,7 @@ static RetainCC *sharedInstance = nil;
         [params setObject:dict forKey:@"custom_data"];
     }
     
-    [manager POST:@"https://app.retain.cc/api/v1/events" parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:@"https://app.retain.cc/api/v1/events" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"operation success: %@", operation);
         NSLog(@"response: %@", [responseObject description]);
         if (callback) {
@@ -105,6 +105,9 @@ static RetainCC *sharedInstance = nil;
 - (void)identifyWithEmail:(NSString*)email userID:(NSString*)userID callback:(void(^)(BOOL success, NSError *error))callback {
     self.userID = userID;
     self.email = email;
+    if (callback) {
+        callback( YES, nil );
+    }
 }
 
 - (void)changeUserAttributes:(NSDictionary*)dictionary callback:(void(^)(BOOL success, NSError *error))callback {
@@ -142,6 +145,8 @@ static RetainCC *sharedInstance = nil;
     if (self.email) {
         [params setObject:self.email forKey:@"email"];
     }
+    [params setObject:@"iOS" forKey:@"last_seen_user_agent"];
+    
     NSString *ipAddress = [self getIPAddress];
     if (![ipAddress isEqualToString:@"error"]) {
         [params setObject:ipAddress forKey:@"last_seen_ip"];
