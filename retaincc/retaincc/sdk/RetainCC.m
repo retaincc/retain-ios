@@ -24,8 +24,15 @@
 - (void)identifyWithEmail:(NSString*)email userID:(NSString*)userID callback:(void(^)(BOOL success, NSError *error))callback;
 - (void)changeUserAttributes:(NSDictionary*)dictionary callback:(void(^)(BOOL success, NSError *error))callback;
 
+# pragma mark Utility
+
 - (AFHTTPRequestOperationManager*)prepareManager;
 - (NSString *)getIPAddress;
+
+#pragma mark Saving
+- (void)saveUserInfo;
+- (void)addPendingRequestInfo:(NSDictionary*)information;
+- (NSString *)filePathForData:(NSString *)data;
 
 @end
 
@@ -52,6 +59,8 @@ static RetainCC *sharedInstance = nil;
     
     self.apiKey = apiKey;
     self.appID = appID;
+    
+    [self restoreUserInfo];
     
     return self;
 }
@@ -99,12 +108,19 @@ static RetainCC *sharedInstance = nil;
         if (callback) {
             callback( NO, error );
         }
+        
+        [self addPendingRequestInfo:@{
+                                      @"type" : @"event",
+                                      @"name" : name,
+                                      @"dict" : dict
+                                      }];
     }];
 }
 
 - (void)identifyWithEmail:(NSString*)email userID:(NSString*)userID callback:(void(^)(BOOL success, NSError *error))callback {
     self.userID = userID;
     self.email = email;
+    [self saveUserInfo];
     if (callback) {
         callback( YES, nil );
     }
@@ -160,10 +176,15 @@ static RetainCC *sharedInstance = nil;
         if (callback) {
             callback(NO, error);
         }
+        
+        [self addPendingRequestInfo:@{
+                                      @"type" : @"userAttr",
+                                      @"dict" : dictionary
+                                      }];
     }];
 }
 
-# pragma mark network utility
+# pragma mark - network utility
 
 - (AFHTTPRequestOperationManager*)prepareManager {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -203,6 +224,73 @@ static RetainCC *sharedInstance = nil;
     freeifaddrs(interfaces);
     return address;
     
+}
+
+# pragma - saving things
+
+- (void)saveUserInfo {
+    NSString *filename = [self filePathForData:@"user"];
+    NSMutableDictionary *userInfo = @{}.mutableCopy;
+    if (self.userID) {
+        [userInfo setObject:self.userID forKey:@"userID"];
+    }
+    if (self.email) {
+        [userInfo setObject:self.email forKey:@"email"];
+    }
+    [userInfo writeToFile:filename atomically:YES];
+}
+
+- (void)restoreUserInfo {
+    NSString *filename = [self filePathForData:@"user"];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithContentsOfFile:filename];
+    if ([userInfo objectForKey:@"userID"]) {
+        self.userID = [userInfo objectForKey:@"userID"];
+    }
+    if ([userInfo objectForKey:@"email"]) {
+        self.email = [userInfo objectForKey:@"email"];
+    }
+}
+
+- (void)addPendingRequestInfo:(NSDictionary*)information{
+    static dispatch_once_t onceToken;
+    __block dispatch_queue_t queue;
+    dispatch_once(&onceToken, ^{
+        queue = dispatch_queue_create("com.oursky.saving", DISPATCH_QUEUE_SERIAL);
+    });
+    
+    dispatch_async(queue, ^{
+        NSString *requestQueueFilename = [self filePathForData:@"requests"];
+        NSMutableArray *requestInfos = [NSMutableArray arrayWithContentsOfFile:requestQueueFilename];
+        if (!requestQueueFilename) {
+            requestInfos = @[].mutableCopy;
+        }
+        [requestInfos addObject:information];
+        [requestInfos writeToFile:requestQueueFilename atomically:YES];
+    });
+}
+
+- (void)executePendingRequestInfo {
+    NSMutableArray *requestInfos = [NSMutableArray arrayWithContentsOfFile:[self filePathForData:@"requests"]];
+    if (!requestInfos) {
+        return;
+    }
+    for (NSDictionary *dict in requestInfos) {
+        if ([[dict objectForKey:@"type"] isEqualToString:@"event"]) {
+            NSString *name = [dict objectForKey:@"name"];
+            NSDictionary *props = [dict objectForKey:@"dict"];
+            [self logEventWithName:name properties:props];
+            
+        } else if ([[dict objectForKey:@"type"] isEqualToString:@"userAttr"]) {
+            NSDictionary *attr = [dict objectForKey:@"dict"];
+            [self changeUserAttributes:attr];
+        }
+    }
+}
+
+- (NSString *)filePathForData:(NSString *)data{
+    NSString *filename = [NSString stringWithFormat:@"RetainCC-%@-%@.plist", self.apiKey, data];
+    return [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject]
+            stringByAppendingPathComponent:filename];
 }
 
 @end
