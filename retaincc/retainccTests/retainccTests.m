@@ -10,6 +10,7 @@
 #import <XCTest/XCTest.h>
 #import <OHHTTPStubs/OHHTTPStubs.h>
 #import "RetainCC.h"
+#import "RCCUserAttributeRequest.h"
 
 @interface retainccTests : XCTestCase
 
@@ -27,6 +28,9 @@
 
 @end
 
+@interface RCCUserAttributeRequest ()
++ (NSString *)getIPAddress;
+@end
 
 @implementation retainccTests
 
@@ -190,7 +194,7 @@
     XCTestExpectation *expectation = [self expectationWithDescription:@"change user attribute async"];
     
     RetainCC *library = [[RetainCC alloc] initWithApiKey:@"API_KEY" appID:@"APP_ID"];
-    ipAddress = [library getIPAddress];
+    ipAddress = [RCCUserAttributeRequest getIPAddress];
     [library identifyWithEmail:@"test@example.com" userID:@"1234"];
     [library changeUserAttributes:@{
                                     @"name" : @"Ben",

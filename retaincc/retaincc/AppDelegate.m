@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "RetainCC.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [RetainCC sharedInstanceWithApiKey:@"API_KEY" appID:@"APPI_ID"];
+    
     return YES;
 }
 
