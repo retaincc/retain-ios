@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		CF2CA7AD19E28AE400DE9F7A /* Document */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = CF2CA7B019E28AE400DE9F7A /* Build configuration list for PBXAggregateTarget "Document" */;
+			buildPhases = (
+				CF2CA7B119E28B3900DE9F7A /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Document;
+			productName = Document;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		2671F5861E454C9D9203608B /* libPods-retainccTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E69F681276A4294A4DC8272 /* libPods-retainccTests.a */; };
 		A6EBB4D0D04E452194A0824F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E81A2199E084FD5915602E2 /* libPods.a */; };
@@ -55,6 +69,7 @@
 		CF106F5419D0303C00FFA5D8 /* retainccTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = retainccTests.m; sourceTree = "<group>"; };
 		CF106F6519D0389300FFA5D8 /* RetainCC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RetainCC.h; path = sdk/RetainCC.h; sourceTree = "<group>"; };
 		CF106F6619D0389300FFA5D8 /* RetainCC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RetainCC.m; path = sdk/RetainCC.m; sourceTree = "<group>"; };
+		CF2CA7B519E28E2700DE9F7A /* Readme.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.markdown; sourceTree = "<group>"; };
 		CFB371E319DE8BDE00A3977F /* RCCRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCCRequest.h; path = sdk/RCCRequest.h; sourceTree = "<group>"; };
 		CFB371E419DE8BDE00A3977F /* RCCRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCCRequest.m; path = sdk/RCCRequest.m; sourceTree = "<group>"; };
 		CFB371EA19DE8C1F00A3977F /* RCCEventRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCCEventRequest.h; path = sdk/RCCEventRequest.h; sourceTree = "<group>"; };
@@ -95,6 +110,7 @@
 		CF106F2C19D0303B00FFA5D8 = {
 			isa = PBXGroup;
 			children = (
+				CF2CA7B519E28E2700DE9F7A /* Readme.markdown */,
 				CF106F3719D0303B00FFA5D8 /* retaincc */,
 				CF106F5119D0303C00FFA5D8 /* retainccTests */,
 				CF106F3619D0303B00FFA5D8 /* Products */,
@@ -228,6 +244,9 @@
 						CreatedOnToolsVersion = 6.1;
 						TestTargetID = CF106F3419D0303B00FFA5D8;
 					};
+					CF2CA7AD19E28AE400DE9F7A = {
+						CreatedOnToolsVersion = 6.1;
+					};
 				};
 			};
 			buildConfigurationList = CF106F3019D0303B00FFA5D8 /* Build configuration list for PBXProject "retaincc" */;
@@ -245,6 +264,7 @@
 			targets = (
 				CF106F3419D0303B00FFA5D8 /* retaincc */,
 				CF106F4D19D0303C00FFA5D8 /* retainccTests */,
+				CF2CA7AD19E28AE400DE9F7A /* Document */,
 			);
 		};
 /* End PBXProject section */
@@ -329,6 +349,19 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		CF2CA7B119E28B3900DE9F7A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/appledoc \\\n--project-name \"${PROJECT_NAME}\" \\\n--project-company \"Oursky\" \\\n--company-id \"com.ourksy\" \\\n--output \"~/Projects/Help/${PROJECT_NAME}\" \\\n--install-docset \\\n--logformat xcode \\\n--keep-undocumented-objects \\\n--keep-undocumented-members \\\n--keep-intermediate-files \\\n--no-repeat-first-par \\\n--no-warn-invalid-crossref \\\n--merge-categories \\\n--exit-threshold 2 \\\n--docset-platform-family iphoneos \\\n--ignore \"*.m\" \\\n--include \"${PROJECT_DIR}/${PROJECT_NAME}/Documentation/Images\" \\\n--ignore \"LoadableCategory.h\" \\\n--index-desc \"${PROJECT_DIR}/readme.markdown\" \\\n\"${PROJECT_DIR}/${PROJECT_NAME}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -522,6 +555,20 @@
 			};
 			name = Release;
 		};
+		CF2CA7AE19E28AE400DE9F7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CF2CA7AF19E28AE400DE9F7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -551,6 +598,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		CF2CA7B019E28AE400DE9F7A /* Build configuration list for PBXAggregateTarget "Document" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF2CA7AE19E28AE400DE9F7A /* Debug */,
+				CF2CA7AF19E28AE400DE9F7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFNetworking.h>
 
+/**
+ *
+ */
 @interface RCCRequest : NSObject<NSCoding>
 
 @property (strong, nonatomic) NSString *userID;

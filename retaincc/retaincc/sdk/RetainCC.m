@@ -208,6 +208,7 @@ static RetainCC *sharedInstance = nil;
 }
 
 - (void)retryTimerCalled:(NSTimer*)timer {
+    [timer invalidate];
     self.retryTimer = nil;
     [self executePendingRequests];
 }
