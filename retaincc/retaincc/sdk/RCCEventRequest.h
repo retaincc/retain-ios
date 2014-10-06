@@ -8,9 +8,20 @@
 
 #import "RCCRequest.h"
 
+/**
+ * A class for the event request.
+ * Please set the properties before calling send.
+ */
 @interface RCCEventRequest : RCCRequest
 
+/**
+ * Name of the event
+ */
+
 @property (strong, nonatomic) NSString *name;
+/**
+ * Detail of the event.
+ */
 @property (strong, nonatomic) NSDictionary *properties;
 
 @end

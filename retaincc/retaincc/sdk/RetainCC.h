@@ -15,6 +15,8 @@
  */
 @interface RetainCC : NSObject
 
+/** @name Setting up */
+
 /**
  * Create a shared instance with Api key and app ID.
  *
@@ -47,6 +49,8 @@
  */
 - (instancetype)initWithApiKey:(NSString*)apiKey appID:(NSString*)appID;
 
+/** @name Logging */
+
 /**
  * Log event.
  *
@@ -70,7 +74,7 @@
 /**
  * Changing user attributes.
  *
- * @param dict Attributes of the current user, can be anything such as Name, Age, Company or whatever you like. This object will be serialized using NSJSONSerialization, so it have to be a valid JSON object, such as NSDictionary, NSArray, NSString, NSNumber. Providing custom objects will gives error.
+ * @param dictionary Attributes of the current user, can be anything such as Name, Age, Company or whatever you like. This object will be serialized using NSJSONSerialization, so it have to be a valid JSON object, such as NSDictionary, NSArray, NSString, NSNumber. Providing custom objects will gives error.
  */
 - (void)changeUserAttributes:(NSDictionary*)dictionary;
 

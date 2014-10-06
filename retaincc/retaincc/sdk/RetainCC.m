@@ -28,6 +28,12 @@
 #pragma mark Saving
 - (void)saveUserInfo;
 - (void)addPendingRequest:(RCCRequest*)request;
+- (void)executePendingRequests;
+
+- (void)scheduleRetryTimer;
+- (void)retryTimerCalled:(NSTimer*)timer;
+
+- (void)reachabilityChanged:(NSNotification*)notification;
 - (NSString *)filePathForData:(NSString *)data;
 
 @end
@@ -223,7 +229,7 @@ static RetainCC *sharedInstance = nil;
 
 #pragma mark Notification
 
-- (void)reachabilityChanged:(NSNotification*)notification{
+- (void)reachabilityChanged:(NSNotification*)notification {
     [self executePendingRequests];
 }
 

@@ -8,8 +8,15 @@
 
 #import "RCCRequest.h"
 
+/**
+ * A class for the user attribute request.
+ * Please set the properties before calling -send:
+ */
 @interface RCCUserAttributeRequest : RCCRequest
 
+/**
+ * User's detail.
+ */
 @property (strong, nonatomic) NSDictionary *attributes;
 
 @end
