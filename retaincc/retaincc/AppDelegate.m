@@ -21,6 +21,8 @@
     
     [RetainCC sharedInstanceWithApiKey:@"API_KEY" appID:@"APPI_ID"];
     
+    [[RetainCC shared] logEventWithName:@"test" properties:@{@"key":@"value"}];
+    
     return YES;
 }
 

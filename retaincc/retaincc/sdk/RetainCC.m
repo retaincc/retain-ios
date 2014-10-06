@@ -19,6 +19,8 @@
 @property (nonatomic, strong) NSString *userID;
 @property (nonatomic, strong) NSString *email;
 
+@property (nonatomic, strong) NSTimer *retryTimer;
+
 - (void)logEventWithName:(NSString*)name properties:(NSDictionary*)dict callback:(void(^)(BOOL success, NSError *error))callback;
 - (void)identifyWithEmail:(NSString*)email userID:(NSString*)userID callback:(void(^)(BOOL success, NSError *error))callback;
 - (void)changeUserAttributes:(NSDictionary*)dictionary callback:(void(^)(BOOL success, NSError *error))callback;
@@ -59,6 +61,7 @@ static RetainCC *sharedInstance = nil;
     [reach startNotifier];
     
     [self restoreUserInfo];
+    [self executePendingRequests];
     
     return self;
 }
@@ -146,6 +149,25 @@ static RetainCC *sharedInstance = nil;
     }
 }
 
+- (void)request:(RCCRequest*)request failedWithError:(NSError*)error{
+    NSUInteger errorCode = [[[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey] statusCode];
+    
+    if (errorCode == 0) {
+        // offline
+        [self addPendingRequest:request];
+        // will retry when network status changed
+    }
+    if (errorCode >= 500) {
+        // server error, let's retry later
+        [self addPendingRequest:request];
+        [self scheduleRetryTimer];
+    }
+    if (errorCode >= 400) {
+        // client error, such as wrong api key, give up and report
+        NSLog(@"RetainCC Error: %@", error.localizedDescription);
+    }
+}
+
 - (void)addPendingRequest:(RCCRequest*)request {
 //    static dispatch_once_t onceToken;
 //    __block dispatch_queue_t queue;
@@ -156,7 +178,7 @@ static RetainCC *sharedInstance = nil;
 //    dispatch_async(queue, ^{
         NSString *requestQueueFilename = [self filePathForData:@"requests"];
         NSMutableArray *savedRequest = [NSMutableArray arrayWithContentsOfFile:requestQueueFilename];
-        if (!requestQueueFilename) {
+        if (!savedRequest) {
             savedRequest = @[].mutableCopy;
         }
         [savedRequest addObject:request];
@@ -179,6 +201,18 @@ static RetainCC *sharedInstance = nil;
         }];
     }
 }
+
+- (void)scheduleRetryTimer {
+    if (self.retryTimer) return; // already scheduled
+    self.retryTimer = [NSTimer scheduledTimerWithTimeInterval:5*60 target:self selector:@selector(retryTimerCalled:) userInfo:nil repeats:NO];
+}
+
+- (void)retryTimerCalled:(NSTimer*)timer {
+    self.retryTimer = nil;
+    [self executePendingRequests];
+}
+
+#pragma mark Utility
 
 - (NSString *)filePathForData:(NSString *)data{
     NSString *filename = [NSString stringWithFormat:@"RetainCC-%@-%@.plist", self.apiKey, data];

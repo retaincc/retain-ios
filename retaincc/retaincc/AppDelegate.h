@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Government/良心.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
