@@ -84,10 +84,10 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "retaincc/retaincc/sdk/*.{h,m}"
+  s.source_files  = "RetainCC/*.{h,m}"
   # s.exclude_files = "Classes/Exclude"
 
-  s.public_header_files = "retaincc/retaincc/sdk/RetainCC.h"
+  s.public_header_files = "RetainCC/RetainCC.h"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -126,7 +126,5 @@ Pod::Spec.new do |s|
   # s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  s.dependency "AFNetworking", "~> 2.4"
-  s.dependency "Reachability", "~> 3.1"
 
 end
