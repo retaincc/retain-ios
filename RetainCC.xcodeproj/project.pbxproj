@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		CFA7A79619EBC8D9009AB9D7 /* Document */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = CFA7A79D19EBC8D9009AB9D7 /* Build configuration list for PBXAggregateTarget "Document" */;
+			buildPhases = (
+				CFA7A79E19EBC8FA009AB9D7 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Document;
+			productName = Document;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		CF9A33D319EBC699002DB35F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = CF9A33D219EBC699002DB35F /* Reachability.m */; };
 		CFA402FD19E7DFD200F67ADD /* libRetainCC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CFA402F119E7DFD200F67ADD /* libRetainCC.a */; };
@@ -250,6 +264,9 @@
 					CFA402FB19E7DFD200F67ADD = {
 						CreatedOnToolsVersion = 6.1;
 					};
+					CFA7A79619EBC8D9009AB9D7 = {
+						CreatedOnToolsVersion = 6.1;
+					};
 				};
 			};
 			buildConfigurationList = CFA402EC19E7DFD200F67ADD /* Build configuration list for PBXProject "RetainCC" */;
@@ -272,6 +289,7 @@
 			targets = (
 				CFA402F019E7DFD200F67ADD /* RetainCC */,
 				CFA402FB19E7DFD200F67ADD /* RetainCCTests */,
+				CFA7A79619EBC8D9009AB9D7 /* Document */,
 			);
 		};
 /* End PBXProject section */
@@ -316,6 +334,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CFA7A79E19EBC8FA009AB9D7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#if [ ${CONFIGURATION} == \"Release\" ]; then\nAPPLEDOC_PATH=`which appledoc`\nif [ $APPLEDOC_PATH ]; then\n$APPLEDOC_PATH \\\n--project-name ${PRODUCT_NAME} \\\n--project-company \"RetainCC SDK\" \\\n--company-id \"com.oursky.retaincc\" \\\n--output ${PRODUCT_NAME}Docs \\\n--keep-undocumented-objects \\\n--keep-undocumented-members \\\n--keep-intermediate-files \\\n--no-install-docset \\\n--no-repeat-first-par \\\n--no-warn-invalid-crossref \\\n--exit-threshold 2 \\\n${PROJECT_DIR}/${PRODUCT_NAME}\nfi;\n#fi;";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CFA402ED19E7DFD200F67ADD /* Sources */ = {
@@ -475,6 +509,20 @@
 			};
 			name = Release;
 		};
+		CFA7A79719EBC8D9009AB9D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CFA7A79819EBC8D9009AB9D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -504,6 +552,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		CFA7A79D19EBC8D9009AB9D7 /* Build configuration list for PBXAggregateTarget "Document" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CFA7A79719EBC8D9009AB9D7 /* Debug */,
+				CFA7A79819EBC8D9009AB9D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
