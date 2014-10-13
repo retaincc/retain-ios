@@ -1,0 +1,511 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CF9A33D319EBC699002DB35F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = CF9A33D219EBC699002DB35F /* Reachability.m */; };
+		CFA402FD19E7DFD200F67ADD /* libRetainCC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CFA402F119E7DFD200F67ADD /* libRetainCC.a */; };
+		CFA4031319E7E5B100F67ADD /* RCCEventRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CFA4030C19E7E5B100F67ADD /* RCCEventRequest.m */; };
+		CFA4031419E7E5B100F67ADD /* RCCRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CFA4030E19E7E5B100F67ADD /* RCCRequest.m */; };
+		CFA4031519E7E5B100F67ADD /* RCCUserAttributeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CFA4031019E7E5B100F67ADD /* RCCUserAttributeRequest.m */; };
+		CFA4031619E7E5B100F67ADD /* RetainCC.m in Sources */ = {isa = PBXBuildFile; fileRef = CFA4031219E7E5B100F67ADD /* RetainCC.m */; };
+		CFA4033A19E7ED0C00F67ADD /* retainccTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CFA4033919E7ED0C00F67ADD /* retainccTests.m */; };
+		CFA4033B19E7ED4B00F67ADD /* RetainCC.m in Sources */ = {isa = PBXBuildFile; fileRef = CFA4031219E7E5B100F67ADD /* RetainCC.m */; };
+		CFA4033C19E7ED4B00F67ADD /* RCCEventRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CFA4030C19E7E5B100F67ADD /* RCCEventRequest.m */; };
+		CFA4033D19E7ED4B00F67ADD /* RCCRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CFA4030E19E7E5B100F67ADD /* RCCRequest.m */; };
+		CFA4033E19E7ED4B00F67ADD /* RCCUserAttributeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CFA4031019E7E5B100F67ADD /* RCCUserAttributeRequest.m */; };
+		CFA4035919E7F0C900F67ADD /* libOHHTTPStubs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CFA4034819E7EE1900F67ADD /* libOHHTTPStubs.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CFA402FE19E7DFD200F67ADD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CFA402E919E7DFD200F67ADD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CFA402F019E7DFD200F67ADD;
+			remoteInfo = RetainCC;
+		};
+		CFA4034719E7EE1900F67ADD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CFA4034019E7EE1800F67ADD /* OHHTTPStubs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 09793579161B6251006DB5D5;
+			remoteInfo = "OHHTTPStubs iOS";
+		};
+		CFA4034919E7EE1900F67ADD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CFA4034019E7EE1800F67ADD /* OHHTTPStubs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 098368CE168FC7920082B1A4;
+			remoteInfo = "OHHTTPStubs iOS Tests";
+		};
+		CFA4034B19E7EE1900F67ADD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CFA4034019E7EE1800F67ADD /* OHHTTPStubs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 27CE42E4184CD21D00484665;
+			remoteInfo = "OHHTTPStubs Mac";
+		};
+		CFA4034D19E7EE1900F67ADD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CFA4034019E7EE1800F67ADD /* OHHTTPStubs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 27CE42F9184CD21D00484665;
+			remoteInfo = "OHHTTPStubs Mac Tests";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CFA402EF19E7DFD200F67ADD /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		CF9A33D119EBC699002DB35F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		CF9A33D219EBC699002DB35F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		CFA402F119E7DFD200F67ADD /* libRetainCC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRetainCC.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CFA402FC19E7DFD200F67ADD /* RetainCCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RetainCCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CFA4030219E7DFD200F67ADD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CFA4030B19E7E5B100F67ADD /* RCCEventRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCEventRequest.h; sourceTree = "<group>"; };
+		CFA4030C19E7E5B100F67ADD /* RCCEventRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCEventRequest.m; sourceTree = "<group>"; };
+		CFA4030D19E7E5B100F67ADD /* RCCRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCRequest.h; sourceTree = "<group>"; };
+		CFA4030E19E7E5B100F67ADD /* RCCRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCRequest.m; sourceTree = "<group>"; };
+		CFA4030F19E7E5B100F67ADD /* RCCUserAttributeRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCUserAttributeRequest.h; sourceTree = "<group>"; };
+		CFA4031019E7E5B100F67ADD /* RCCUserAttributeRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCUserAttributeRequest.m; sourceTree = "<group>"; };
+		CFA4031119E7E5B100F67ADD /* RetainCC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RetainCC.h; sourceTree = "<group>"; };
+		CFA4031219E7E5B100F67ADD /* RetainCC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RetainCC.m; sourceTree = "<group>"; };
+		CFA4033919E7ED0C00F67ADD /* retainccTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = retainccTests.m; sourceTree = "<group>"; };
+		CFA4034019E7EE1800F67ADD /* OHHTTPStubs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OHHTTPStubs.xcodeproj; path = OHHTTPStubs/OHHTTPStubs.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CFA402EE19E7DFD200F67ADD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CFA402F919E7DFD200F67ADD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CFA4035919E7F0C900F67ADD /* libOHHTTPStubs.a in Frameworks */,
+				CFA402FD19E7DFD200F67ADD /* libRetainCC.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CFA402E819E7DFD200F67ADD = {
+			isa = PBXGroup;
+			children = (
+				CFA402F319E7DFD200F67ADD /* RetainCC */,
+				CFA4030019E7DFD200F67ADD /* RetainCCTests */,
+				CFA402F219E7DFD200F67ADD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CFA402F219E7DFD200F67ADD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CFA402F119E7DFD200F67ADD /* libRetainCC.a */,
+				CFA402FC19E7DFD200F67ADD /* RetainCCTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CFA402F319E7DFD200F67ADD /* RetainCC */ = {
+			isa = PBXGroup;
+			children = (
+				CFA4031119E7E5B100F67ADD /* RetainCC.h */,
+				CFA4031219E7E5B100F67ADD /* RetainCC.m */,
+				CFA4030D19E7E5B100F67ADD /* RCCRequest.h */,
+				CFA4030E19E7E5B100F67ADD /* RCCRequest.m */,
+				CFA4030B19E7E5B100F67ADD /* RCCEventRequest.h */,
+				CFA4030C19E7E5B100F67ADD /* RCCEventRequest.m */,
+				CFA4030F19E7E5B100F67ADD /* RCCUserAttributeRequest.h */,
+				CFA4031019E7E5B100F67ADD /* RCCUserAttributeRequest.m */,
+				CFA4031719E7E5CB00F67ADD /* Libraries */,
+			);
+			path = RetainCC;
+			sourceTree = "<group>";
+		};
+		CFA4030019E7DFD200F67ADD /* RetainCCTests */ = {
+			isa = PBXGroup;
+			children = (
+				CFA4033919E7ED0C00F67ADD /* retainccTests.m */,
+				CFA4030119E7DFD200F67ADD /* Supporting Files */,
+			);
+			path = RetainCCTests;
+			sourceTree = "<group>";
+		};
+		CFA4030119E7DFD200F67ADD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CFA4033F19E7ED5700F67ADD /* OHHTTPStubs */,
+				CFA4030219E7DFD200F67ADD /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CFA4031719E7E5CB00F67ADD /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				CFA4033519E7EB3F00F67ADD /* Reachability */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		CFA4033519E7EB3F00F67ADD /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				CF9A33D119EBC699002DB35F /* Reachability.h */,
+				CF9A33D219EBC699002DB35F /* Reachability.m */,
+			);
+			name = Reachability;
+			sourceTree = "<group>";
+		};
+		CFA4033F19E7ED5700F67ADD /* OHHTTPStubs */ = {
+			isa = PBXGroup;
+			children = (
+				CFA4034019E7EE1800F67ADD /* OHHTTPStubs.xcodeproj */,
+			);
+			name = OHHTTPStubs;
+			sourceTree = "<group>";
+		};
+		CFA4034119E7EE1800F67ADD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CFA4034819E7EE1900F67ADD /* libOHHTTPStubs.a */,
+				CFA4034A19E7EE1900F67ADD /* OHHTTPStubs iOS Tests.octest */,
+				CFA4034C19E7EE1900F67ADD /* OHHTTPStubs.framework */,
+				CFA4034E19E7EE1900F67ADD /* OHHTTPStubs Mac Tests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CFA402F019E7DFD200F67ADD /* RetainCC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CFA4030519E7DFD200F67ADD /* Build configuration list for PBXNativeTarget "RetainCC" */;
+			buildPhases = (
+				CFA402ED19E7DFD200F67ADD /* Sources */,
+				CFA402EE19E7DFD200F67ADD /* Frameworks */,
+				CFA402EF19E7DFD200F67ADD /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RetainCC;
+			productName = RetainCC;
+			productReference = CFA402F119E7DFD200F67ADD /* libRetainCC.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		CFA402FB19E7DFD200F67ADD /* RetainCCTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CFA4030819E7DFD200F67ADD /* Build configuration list for PBXNativeTarget "RetainCCTests" */;
+			buildPhases = (
+				CFA402F819E7DFD200F67ADD /* Sources */,
+				CFA402F919E7DFD200F67ADD /* Frameworks */,
+				CFA402FA19E7DFD200F67ADD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CFA402FF19E7DFD200F67ADD /* PBXTargetDependency */,
+			);
+			name = RetainCCTests;
+			productName = RetainCCTests;
+			productReference = CFA402FC19E7DFD200F67ADD /* RetainCCTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CFA402E919E7DFD200F67ADD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = oursky;
+				TargetAttributes = {
+					CFA402F019E7DFD200F67ADD = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					CFA402FB19E7DFD200F67ADD = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
+			};
+			buildConfigurationList = CFA402EC19E7DFD200F67ADD /* Build configuration list for PBXProject "RetainCC" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CFA402E819E7DFD200F67ADD;
+			productRefGroup = CFA402F219E7DFD200F67ADD /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = CFA4034119E7EE1800F67ADD /* Products */;
+					ProjectRef = CFA4034019E7EE1800F67ADD /* OHHTTPStubs.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				CFA402F019E7DFD200F67ADD /* RetainCC */,
+				CFA402FB19E7DFD200F67ADD /* RetainCCTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		CFA4034819E7EE1900F67ADD /* libOHHTTPStubs.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libOHHTTPStubs.a;
+			remoteRef = CFA4034719E7EE1900F67ADD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CFA4034A19E7EE1900F67ADD /* OHHTTPStubs iOS Tests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "OHHTTPStubs iOS Tests.octest";
+			remoteRef = CFA4034919E7EE1900F67ADD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CFA4034C19E7EE1900F67ADD /* OHHTTPStubs.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OHHTTPStubs.framework;
+			remoteRef = CFA4034B19E7EE1900F67ADD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CFA4034E19E7EE1900F67ADD /* OHHTTPStubs Mac Tests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "OHHTTPStubs Mac Tests.octest";
+			remoteRef = CFA4034D19E7EE1900F67ADD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CFA402FA19E7DFD200F67ADD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CFA402ED19E7DFD200F67ADD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CFA4031519E7E5B100F67ADD /* RCCUserAttributeRequest.m in Sources */,
+				CFA4031419E7E5B100F67ADD /* RCCRequest.m in Sources */,
+				CFA4031619E7E5B100F67ADD /* RetainCC.m in Sources */,
+				CFA4031319E7E5B100F67ADD /* RCCEventRequest.m in Sources */,
+				CF9A33D319EBC699002DB35F /* Reachability.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CFA402F819E7DFD200F67ADD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CFA4033E19E7ED4B00F67ADD /* RCCUserAttributeRequest.m in Sources */,
+				CFA4033D19E7ED4B00F67ADD /* RCCRequest.m in Sources */,
+				CFA4033B19E7ED4B00F67ADD /* RetainCC.m in Sources */,
+				CFA4033A19E7ED0C00F67ADD /* retainccTests.m in Sources */,
+				CFA4033C19E7ED4B00F67ADD /* RCCEventRequest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CFA402FF19E7DFD200F67ADD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CFA402F019E7DFD200F67ADD /* RetainCC */;
+			targetProxy = CFA402FE19E7DFD200F67ADD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		CFA4030319E7DFD200F67ADD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		CFA4030419E7DFD200F67ADD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CFA4030619E7DFD200F67ADD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		CFA4030719E7DFD200F67ADD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		CFA4030919E7DFD200F67ADD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = RetainCCTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CFA4030A19E7DFD200F67ADD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = RetainCCTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CFA402EC19E7DFD200F67ADD /* Build configuration list for PBXProject "RetainCC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CFA4030319E7DFD200F67ADD /* Debug */,
+				CFA4030419E7DFD200F67ADD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CFA4030519E7DFD200F67ADD /* Build configuration list for PBXNativeTarget "RetainCC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CFA4030619E7DFD200F67ADD /* Debug */,
+				CFA4030719E7DFD200F67ADD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CFA4030819E7DFD200F67ADD /* Build configuration list for PBXNativeTarget "RetainCCTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CFA4030919E7DFD200F67ADD /* Debug */,
+				CFA4030A19E7DFD200F67ADD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CFA402E919E7DFD200F67ADD /* Project object */;
+}
