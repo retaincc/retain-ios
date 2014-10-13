@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		CF12237919EBE15900F08541 /* RetainCC.h in Headers */ = {isa = PBXBuildFile; fileRef = CFA4031119E7E5B100F67ADD /* RetainCC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CF9A33D319EBC699002DB35F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = CF9A33D219EBC699002DB35F /* Reachability.m */; };
 		CFA402FD19E7DFD200F67ADD /* libRetainCC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CFA402F119E7DFD200F67ADD /* libRetainCC.a */; };
 		CFA4031319E7E5B100F67ADD /* RCCEventRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CFA4030C19E7E5B100F67ADD /* RCCEventRequest.m */; };
@@ -213,6 +214,17 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		CF12237819EBE15300F08541 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF12237919EBE15900F08541 /* RetainCC.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		CFA402F019E7DFD200F67ADD /* RetainCC */ = {
 			isa = PBXNativeTarget;
@@ -221,6 +233,7 @@
 				CFA402ED19E7DFD200F67ADD /* Sources */,
 				CFA402EE19E7DFD200F67ADD /* Frameworks */,
 				CFA402EF19E7DFD200F67ADD /* CopyFiles */,
+				CF12237819EBE15300F08541 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -466,6 +479,7 @@
 			buildSettings = {
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -475,6 +489,7 @@
 			buildSettings = {
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -513,6 +528,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
@@ -520,6 +536,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -560,6 +577,7 @@
 				CFA7A79819EBC8D9009AB9D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
