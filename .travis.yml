@@ -1,0 +1,5 @@
+language: objective-c
+xcode_project: RetainCC.xcodeproj # path to your xcodeproj folder
+xcode_scheme: RetainCCTests
+xcode_sdk: iphonesimulator7.0
+
