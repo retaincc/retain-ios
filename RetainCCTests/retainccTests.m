@@ -41,6 +41,7 @@
 
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
+    [OHHTTPStubs removeAllStubs];
     [super tearDown];
 }
 
@@ -60,7 +61,6 @@
     NSError *error = nil;
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"%@",result);
     XCTAssert([result isEqualToString:@"Hello World!"],@"Stub request");
 }
 
@@ -94,8 +94,8 @@
                                              @"CUSTOM_KEY" : @"CUSTOM_VALUE"
                                              }
                                      };
-        NSLog(@"%@",shouldSend.description);
-        NSLog(@"%@",bodyData.description);
+        NSLog(@"test send1 %@",shouldSend.description);
+        NSLog(@"test send2 %@",bodyData.description);
         XCTAssert([bodyData isEqualToDictionary:shouldSend], @"body correct");
         XCTAssert(!error);
 //        XCTAssert([[bodyData objectForKey:@"KEY1"] isEqualToString:@"VALUE1"]);
@@ -144,67 +144,87 @@
     
     __block NSString *ipAddress = @"";
     
+    RetainCC *library = [[RetainCC alloc] initWithApiKey:@"API_KEY" appID:@"APP_ID"];
+    ipAddress = [RCCUserAttributeRequest getIPAddress];
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"change user attribute async"];
+    
     [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-        
-        BOOL shouldApply = [request.URL.absoluteString isEqualToString:@"https://app.retain.cc/api/v1/users"];
-        if (!shouldApply) return NO;
-        
-        NSDictionary *allHeaders = request.allHTTPHeaderFields;
-        // check auth
-        NSString *authString = [allHeaders objectForKey:@"Authorization"];
-        XCTAssert(authString, @"No auth string found");
-        authString = [authString substringFromIndex:[authString rangeOfString:@"Basic "].length];
-        NSData *authData = [[NSData alloc]initWithBase64EncodedString:authString options:0];
-        XCTAssert(authData, @"Auth data is not base63 encoded");
-        NSString *decodedData = [[NSString alloc] initWithData:authData encoding:NSUTF8StringEncoding];
-        XCTAssert([decodedData isEqualToString:@"APP_ID:API_KEY"]);
-        
-        // content type check
-        XCTAssert([[allHeaders objectForKey:@"Content-type"] rangeOfString:@"application/json"].location != NSNotFound,@"Request Content-type should be json");
-        
-        NSError *error = nil;
-        NSDictionary *bodyData = [NSJSONSerialization JSONObjectWithData:request.HTTPBody options:kNilOptions error:&error];
-        NSLog(@"%@",bodyData.description);
-        NSDictionary *shouldSend = @{
-                                      @"email" : @"test@example.com",
-                                      @"user_id" : @"1234",
-                                      @"name" : @"Ben",
-                                      @"custom_data" : @{
-                                              @"CUSTOM_KEY1" : @"CUSTOM_VALUE1",
-                                              @"CUSTOM_KEY2" : @"CUSTOM_VALUE2"
-                                              },
-                                      @"last_seen_ip" : ipAddress,
-                                      @"last_seen_user_agent" : @"iOS"
-                                      };
-
-        XCTAssert([bodyData isEqualToDictionary:shouldSend], @"send correct data");
-        XCTAssert(!error);
-        //        XCTAssert([[bodyData objectForKey:@"KEY1"] isEqualToString:@"VALUE1"]);
-        //        XCTAssert([[bodyData objectForKey:@"KEY2"] isEqualToString:@"VALUE2"]);
-        
         return YES;
-    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
-        // Stub all those requests with "Hello World!" string
+    } withStubResponse:^OHHTTPStubsResponse *(NSURLRequest *request) {
         NSData* stubData = [@"{\"email\" : \"bencheng@oursky.com\",\"user_id\" : \"1\",\"name\" : \"Ben Cheng\",\"created_at\" : 1257553080,\"custom_data\" : {\"plan\" : \"pro\"},\"last_seen_ip\" : \"1.2.3.4\",\"last_seen_user_agent\" : \"ie6\",\"company_ids\" : [6, 10],\"last_impression_at\" : 1300000000}" dataUsingEncoding:NSUTF8StringEncoding];
         return [OHHTTPStubsResponse responseWithData:stubData statusCode:200 headers:@{
                                                                                        @"Content-type":@"application/json"
                                                                                        }];
     }];
     
-    XCTestExpectation *expectation = [self expectationWithDescription:@"change user attribute async"];
-    
-    RetainCC *library = [[RetainCC alloc] initWithApiKey:@"API_KEY" appID:@"APP_ID"];
-    ipAddress = [RCCUserAttributeRequest getIPAddress];
-    [library identifyWithEmail:@"test@example.com" userID:@"1234"];
-    [library changeUserAttributes:@{
-                                    @"name" : @"Ben",
-                                    @"CUSTOM_KEY1" : @"CUSTOM_VALUE1",
-                                    @"CUSTOM_KEY2" : @"CUSTOM_VALUE2"
-                                    }
-                     callback:^(BOOL success, NSError *error) {
-                         XCTAssert(success,@"Request failed, %@", error);
-                         [expectation fulfill];
-                     }];
+    [library identifyWithEmail:@"test@example.com" userID:@"1234" callback:^(BOOL success, NSError *error) {
+        [OHHTTPStubs removeAllStubs];
+        [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
+            
+            BOOL shouldApply = [request.URL.absoluteString isEqualToString:@"https://app.retain.cc/api/v1/users"];
+            if (!shouldApply) return NO;
+            
+            NSDictionary *allHeaders = request.allHTTPHeaderFields;
+            // check auth
+            NSString *authString = [allHeaders objectForKey:@"Authorization"];
+            XCTAssert(authString, @"No auth string found");
+            authString = [authString substringFromIndex:[authString rangeOfString:@"Basic "].length];
+            NSData *authData = [[NSData alloc]initWithBase64EncodedString:authString options:0];
+            XCTAssert(authData, @"Auth data is not base63 encoded");
+            NSString *decodedData = [[NSString alloc] initWithData:authData encoding:NSUTF8StringEncoding];
+            XCTAssert([decodedData isEqualToString:@"APP_ID:API_KEY"]);
+            
+            // content type check
+            XCTAssert([[allHeaders objectForKey:@"Content-type"] rangeOfString:@"application/json"].location != NSNotFound,@"Request Content-type should be json");
+            
+            NSError *error = nil;
+            NSDictionary *bodyData = [NSJSONSerialization JSONObjectWithData:request.HTTPBody options:kNilOptions error:&error];
+            NSDictionary *shouldSend = @{
+                                          @"email" : @"test@example.com",
+                                          @"user_id" : @"1234",
+                                          @"name" : @"Ben",
+                                          @"custom_data" : @{
+                                                  @"CUSTOM_KEY1" : @"CUSTOM_VALUE1",
+                                                  @"CUSTOM_KEY2" : @"CUSTOM_VALUE2",
+                                                  @"system_version" : [UIDevice currentDevice].systemVersion,
+                                                  @"system_name" : [UIDevice currentDevice].systemName,
+                                                  @"model" : [UIDevice currentDevice].model,
+                                                  @"screen_size" : NSStringFromCGSize([UIScreen mainScreen].bounds.size),
+                                                  @"scale" : @([UIScreen mainScreen].scale)
+                                                  },
+                                          @"last_seen_ip" : ipAddress,
+                                          @"last_seen_user_agent" : @"iOS",
+                                          @"last_impression_at" : [bodyData objectForKey:@"last_impression_at"]
+                                          };
+            if (![shouldSend isEqualToDictionary:bodyData]) {
+                NSLog(@"Change attributes ============ ");
+                NSLog(@"%@",bodyData.description);
+                NSLog(@"%@", shouldSend.description);
+            }
+            XCTAssert([bodyData isEqualToDictionary:shouldSend], @"send correct data");
+            XCTAssert(!error);
+            //        XCTAssert([[bodyData objectForKey:@"KEY1"] isEqualToString:@"VALUE1"]);
+            //        XCTAssert([[bodyData objectForKey:@"KEY2"] isEqualToString:@"VALUE2"]);
+            
+            return YES;
+        } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
+            NSData* stubData = [@"{\"email\" : \"bencheng@oursky.com\",\"user_id\" : \"1\",\"name\" : \"Ben Cheng\",\"created_at\" : 1257553080,\"custom_data\" : {\"plan\" : \"pro\"},\"last_seen_ip\" : \"1.2.3.4\",\"last_seen_user_agent\" : \"ie6\",\"company_ids\" : [6, 10],\"last_impression_at\" : 1300000000}" dataUsingEncoding:NSUTF8StringEncoding];
+            return [OHHTTPStubsResponse responseWithData:stubData statusCode:200 headers:@{
+                                                                                           @"Content-type":@"application/json"
+                                                                                           }];
+        }];
+        
+        [library changeUserAttributes:@{
+                                        @"name" : @"Ben",
+                                        @"CUSTOM_KEY1" : @"CUSTOM_VALUE1",
+                                        @"CUSTOM_KEY2" : @"CUSTOM_VALUE2"
+                                        }
+                         callback:^(BOOL success, NSError *error) {
+                             XCTAssert(success,@"Request failed, %@", error);
+                             [expectation fulfill];
+                         }];
+    }];
     [self waitForExpectationsWithTimeout:5 handler:^(NSError *error) {
         NSLog(@"test error: %@", error.localizedDescription);
     }];

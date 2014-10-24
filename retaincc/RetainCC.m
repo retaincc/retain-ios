@@ -128,7 +128,7 @@ static RetainCC *sharedInstance = nil;
         if (!success) {
             [self addPendingRequest:userRequest];
         }
-        if (success) {
+        if (callback) {
             callback(success, error);
         }
     }];

@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 oursky. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "RCCUserAttributeRequest.h"
 #include <ifaddrs.h>
 #include <arpa/inet.h>
@@ -35,6 +36,7 @@
                            @"last_impression_at",
                            @"company_id"];
     
+//    demo add button
     
     for (NSString *key in self.attributes) {
         if ([apiFields containsObject:key]) {
@@ -44,6 +46,12 @@
             [customData setObject:[self.attributes objectForKey:key] forKey:key];
         }
     }
+    
+    [customData setObject:[UIDevice currentDevice].systemVersion forKey:@"system_version"];
+    [customData setObject:[UIDevice currentDevice].systemName forKey:@"system_name"];
+    [customData setObject:[UIDevice currentDevice].model forKey:@"model"];
+    [customData setObject:NSStringFromCGSize([UIScreen mainScreen].bounds.size) forKey:@"screen_size"];
+    [customData setObject:@([UIScreen mainScreen].scale) forKey:@"scale"];
     
     [params setObject:customData forKey:@"custom_data"];
     
@@ -55,7 +63,7 @@
     }
     [params setObject:@"iOS" forKey:@"last_seen_user_agent"];
     [params setObject:@([[NSDate date] timeIntervalSince1970]) forKey:@"last_impression_at"];
-    
+
     NSString *ipAddress = [RCCUserAttributeRequest getIPAddress];
     if (![ipAddress isEqualToString:@"error"]) {
         [params setObject:ipAddress forKey:@"last_seen_ip"];
