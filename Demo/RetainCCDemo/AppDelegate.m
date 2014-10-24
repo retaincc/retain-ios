@@ -19,7 +19,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [RetainCC sharedInstanceWithApiKey:@"aaaaa" appID:@"bbbbb"];
-    [[RetainCC shared] logEventWithName:@"Clicked" properties:@{@"color":@"red"}];
+    [[RetainCC shared] identifyWithEmail:@"some@one.com" userID:@"12345"];
     
     return YES;
 }

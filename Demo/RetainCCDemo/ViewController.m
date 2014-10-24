@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import <RetainCC/RetainCC.h>
 
 @interface ViewController ()
 
@@ -22,6 +23,19 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (IBAction)orangeButtonTapped:(id)sender {
+    [[RetainCC shared] logEventWithName:@"button_tapped" properties:@{
+                                                                      @"color":@"orange"
+                                                                      }];
+}
+
+- (IBAction)blueButtonTapped:(id)sender {
+    [[RetainCC shared] logEventWithName:@"button_tapped" properties:@{
+                                                                      @"color":@"blue"
+                                                                      }];
 }
 
 @end
