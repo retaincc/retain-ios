@@ -54,6 +54,7 @@
         [params setObject:self.email forKey:@"email"];
     }
     [params setObject:@"iOS" forKey:@"last_seen_user_agent"];
+    [params setObject:@([[NSDate date] timeIntervalSince1970]) forKey:@"last_impression_at"];
     
     NSString *ipAddress = [RCCUserAttributeRequest getIPAddress];
     if (![ipAddress isEqualToString:@"error"]) {

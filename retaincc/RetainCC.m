@@ -11,6 +11,9 @@
 #import "RCCUserAttributeRequest.h"
 #import "Reachability.h"
 
+// 10 minutes
+#define kRetainCCPingInterval 600
+
 @interface RetainCC ()
 
 @property (nonatomic, strong) NSString *apiKey;
@@ -20,6 +23,7 @@
 @property (nonatomic, strong) NSString *email;
 
 @property (nonatomic, strong) NSTimer *retryTimer;
+@property (nonatomic, strong) NSTimer *periodicPingTimer;
 
 - (void)logEventWithName:(NSString*)name properties:(NSDictionary*)dict callback:(void(^)(BOOL success, NSError *error))callback;
 - (void)identifyWithEmail:(NSString*)email userID:(NSString*)userID callback:(void(^)(BOOL success, NSError *error))callback;
@@ -69,6 +73,8 @@ static RetainCC *sharedInstance = nil;
     [self restoreUserInfo];
     [self executePendingRequests];
     
+    self.periodicPingTimer = [NSTimer scheduledTimerWithTimeInterval:kRetainCCPingInterval target:self selector:@selector(periodicPingTimerCalled:) userInfo:nil repeats:YES];
+    
     return self;
 }
 
@@ -109,9 +115,7 @@ static RetainCC *sharedInstance = nil;
     self.userID = userID;
     self.email = email;
     [self saveUserInfo];
-    if (callback) {
-        callback( YES, nil );
-    }
+    [self changeUserAttributes:@{} callback:callback];
 }
 
 - (void)changeUserAttributes:(NSDictionary*)dictionary callback:(void(^)(BOOL success, NSError *error))callback {
@@ -121,7 +125,7 @@ static RetainCC *sharedInstance = nil;
     userRequest.attributes = dictionary;
     
     [userRequest send:^(BOOL success, NSError *error) {
-        if (success) {
+        if (!success) {
             [self addPendingRequest:userRequest];
         }
         if (success) {
@@ -155,33 +159,35 @@ static RetainCC *sharedInstance = nil;
     }
 }
 
+# pragma Error handling and retry
+
 - (void)request:(RCCRequest*)request failedWithError:(NSError*)error{
-//    NSUInteger errorCode = [[[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey] statusCode];
-//    
-//    if (errorCode == 0) {
-//        // offline
-//        [self addPendingRequest:request];
-//        // will retry when network status changed
-//    }
-//    if (errorCode >= 500) {
-//        // server error, let's retry later
-//        [self addPendingRequest:request];
-//        [self scheduleRetryTimer];
-//    }
-//    if (errorCode >= 400) {
-//        // client error, such as wrong api key, give up and report
-//        NSLog(@"RetainCC Error: %@", error.localizedDescription);
-//    }
+    NSUInteger errorCode = error.code;
+    
+    if (errorCode == 0) {
+        // offline
+        [self addPendingRequest:request];
+        // will retry when network status changed
+    }
+    if (errorCode >= 500) {
+        // server error, let's retry later
+        [self addPendingRequest:request];
+        [self scheduleRetryTimer];
+    }
+    if (errorCode >= 400) {
+        // client error, such as wrong api key, give up and report
+        NSLog(@"RetainCC Error: %@", error.localizedDescription);
+    }
 }
 
 - (void)addPendingRequest:(RCCRequest*)request {
-//    static dispatch_once_t onceToken;
-//    __block dispatch_queue_t queue;
-//    dispatch_once(&onceToken, ^{
-//        queue = dispatch_queue_create("com.oursky.saving", DISPATCH_QUEUE_SERIAL);
-//    });
-//    
-//    dispatch_async(queue, ^{
+    static dispatch_once_t onceToken;
+    static dispatch_queue_t queue;
+    dispatch_once(&onceToken, ^{
+        queue = dispatch_queue_create("com.oursky.saving", DISPATCH_QUEUE_SERIAL);
+    });
+    
+    dispatch_async(queue, ^{
         NSString *requestQueueFilename = [self filePathForData:@"requests"];
         NSMutableArray *savedRequest = [NSMutableArray arrayWithContentsOfFile:requestQueueFilename];
         if (!savedRequest) {
@@ -189,7 +195,7 @@ static RetainCC *sharedInstance = nil;
         }
         [savedRequest addObject:request];
         [NSKeyedArchiver archiveRootObject:savedRequest toFile:requestQueueFilename];
-//    });
+    });
 }
 
 - (void)executePendingRequests {
@@ -217,6 +223,17 @@ static RetainCC *sharedInstance = nil;
     [timer invalidate];
     self.retryTimer = nil;
     [self executePendingRequests];
+}
+
+#pragma mark Periodic ping
+
+- (void)periodicPingTimerCalled:(NSTimer*)timer {
+    // ping server
+    RCCUserAttributeRequest *userRequest = [[RCCUserAttributeRequest alloc] initWithApiKey:self.apiKey appID:self.appID];
+    userRequest.userID = self.userID;
+    userRequest.email = self.email;
+    // give up if failed
+    [userRequest send:^(BOOL success, NSError *error) {}];
 }
 
 #pragma mark Utility
