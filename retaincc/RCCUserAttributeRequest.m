@@ -53,6 +53,13 @@
     [customData setObject:NSStringFromCGSize([UIScreen mainScreen].bounds.size) forKey:@"screen_size"];
     [customData setObject:@([UIScreen mainScreen].scale) forKey:@"scale"];
     
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(nativeBounds)]) {
+        [customData setObject:NSStringFromCGSize([UIScreen mainScreen].nativeBounds.size) forKey:@"native_screen_size"];
+    }
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(nativeScale)]) {
+        [customData setObject:@([UIScreen mainScreen].nativeScale) forKey:@"native_scale"];
+    }
+    
     [params setObject:customData forKey:@"custom_data"];
     
     if (self.userID) {

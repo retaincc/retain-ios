@@ -98,8 +98,6 @@
         NSLog(@"test send2 %@",bodyData.description);
         XCTAssert([bodyData isEqualToDictionary:shouldSend], @"body correct");
         XCTAssert(!error);
-//        XCTAssert([[bodyData objectForKey:@"KEY1"] isEqualToString:@"VALUE1"]);
-//        XCTAssert([[bodyData objectForKey:@"KEY2"] isEqualToString:@"VALUE2"]);
         
         return YES;
     } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
@@ -192,11 +190,17 @@
                                                   @"model" : [UIDevice currentDevice].model,
                                                   @"screen_size" : NSStringFromCGSize([UIScreen mainScreen].bounds.size),
                                                   @"scale" : @([UIScreen mainScreen].scale)
-                                                  },
+                                                  }.mutableCopy,
                                           @"last_seen_ip" : ipAddress,
                                           @"last_seen_user_agent" : @"iOS",
                                           @"last_impression_at" : [bodyData objectForKey:@"last_impression_at"]
                                           };
+            if ([[UIScreen mainScreen] respondsToSelector:@selector(nativeBounds)]) {
+                [[shouldSend objectForKey:@"custom_data"] setObject:NSStringFromCGSize([UIScreen mainScreen].nativeBounds.size) forKey:@"native_screen_size"];
+            }
+            if ([[UIScreen mainScreen] respondsToSelector:@selector(nativeScale)]) {
+                [[shouldSend objectForKey:@"custom_data"] setObject:@([UIScreen mainScreen].nativeScale) forKey:@"native_scale"];
+            }
             if (![shouldSend isEqualToDictionary:bodyData]) {
                 NSLog(@"Change attributes ============ ");
                 NSLog(@"%@",bodyData.description);
@@ -226,7 +230,9 @@
                          }];
     }];
     [self waitForExpectationsWithTimeout:5 handler:^(NSError *error) {
-        NSLog(@"test error: %@", error.localizedDescription);
+        if (error) {
+            NSLog(@"test error: %@", error.localizedDescription);
+        }
     }];
 }
 
