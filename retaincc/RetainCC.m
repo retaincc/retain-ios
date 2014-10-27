@@ -14,6 +14,10 @@
 // 10 minutes
 #define kRetainCCPingInterval 600
 
+#if !defined(DEBUG) && !defined (RETAINCC_VERBOSE)
+#define NSLog(...)
+#endif
+
 @interface RetainCC ()
 
 @property (nonatomic, strong) NSString *apiKey;

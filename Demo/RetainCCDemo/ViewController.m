@@ -27,12 +27,14 @@
 
 
 - (IBAction)orangeButtonTapped:(id)sender {
+    [[[UIAlertView alloc] initWithTitle:@"RetainCC" message:@"Orange button pressed. Sending request to RetainCC, you can check the result on the web console" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     [[RetainCC shared] logEventWithName:@"button_tapped" properties:@{
                                                                       @"color":@"orange"
                                                                       }];
 }
 
 - (IBAction)blueButtonTapped:(id)sender {
+    [[[UIAlertView alloc] initWithTitle:@"RetainCC" message:@"Blue button pressed. Sending request to RetainCC, you can check the result on the web console" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     [[RetainCC shared] logEventWithName:@"button_tapped" properties:@{
                                                                       @"color":@"blue"
                                                                       }];
