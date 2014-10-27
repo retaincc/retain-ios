@@ -34,18 +34,22 @@
                            @"last_seen_user_agent",
                            @"companies",
                            @"last_impression_at",
-                           @"company_id"];
+                           @"company_ids"];
     
-//    demo add button
-    
-    for (NSString *key in self.attributes) {
-        if ([apiFields containsObject:key]) {
-            [params setObject:[self.attributes objectForKey:key] forKey:key];
-        } else {
-            // put it into custom data
-            [customData setObject:[self.attributes objectForKey:key] forKey:key];
-        }
+    if (self.userID) {
+        [params setObject:self.userID forKey:@"user_id"];
     }
+    if (self.email) {
+        [params setObject:self.email forKey:@"email"];
+    }
+    [params setObject:@"iOS" forKey:@"last_seen_user_agent"];
+    [params setObject:@([[NSDate date] timeIntervalSince1970]) forKey:@"last_impression_at"];
+    
+    NSString *ipAddress = [RCCUserAttributeRequest getIPAddress];
+    if (![ipAddress isEqualToString:@"error"]) {
+        [params setObject:ipAddress forKey:@"last_seen_ip"];
+    }
+    [params setObject:customData forKey:@"custom_data"];
     
     [customData setObject:[UIDevice currentDevice].systemVersion forKey:@"system_version"];
     [customData setObject:[UIDevice currentDevice].systemName forKey:@"system_name"];
@@ -60,20 +64,13 @@
         [customData setObject:@([UIScreen mainScreen].nativeScale) forKey:@"native_scale"];
     }
     
-    [params setObject:customData forKey:@"custom_data"];
-    
-    if (self.userID) {
-        [params setObject:self.userID forKey:@"user_id"];
-    }
-    if (self.email) {
-        [params setObject:self.email forKey:@"email"];
-    }
-    [params setObject:@"iOS" forKey:@"last_seen_user_agent"];
-    [params setObject:@([[NSDate date] timeIntervalSince1970]) forKey:@"last_impression_at"];
-
-    NSString *ipAddress = [RCCUserAttributeRequest getIPAddress];
-    if (![ipAddress isEqualToString:@"error"]) {
-        [params setObject:ipAddress forKey:@"last_seen_ip"];
+    for (NSString *key in self.attributes) {
+        if ([apiFields containsObject:key]) {
+            [params setObject:[self.attributes objectForKey:key] forKey:key];
+        } else {
+            // put it into custom data
+            [customData setObject:[self.attributes objectForKey:key] forKey:key];
+        }
     }
     
     NSMutableURLRequest *request = [self authedRequestWithJSON:params];
