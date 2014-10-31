@@ -189,8 +189,8 @@
                                                   @"system_name" : [UIDevice currentDevice].systemName,
                                                   @"model" : [UIDevice currentDevice].model,
                                                   @"screen_size" : NSStringFromCGSize([UIScreen mainScreen].bounds.size),
-                                                  @"scale" : @([UIScreen mainScreen].scale)
-                                                  }.mutableCopy,
+                                                  @"scale" : [NSString stringWithFormat:@"%f",[UIScreen mainScreen].scale]
+                                              }.mutableCopy,
                                           @"last_seen_ip" : ipAddress,
                                           @"last_seen_user_agent" : @"iOS",
                                           @"last_impression_at" : [bodyData objectForKey:@"last_impression_at"]
@@ -199,7 +199,7 @@
                 [[shouldSend objectForKey:@"custom_data"] setObject:NSStringFromCGSize([UIScreen mainScreen].nativeBounds.size) forKey:@"native_screen_size"];
             }
             if ([[UIScreen mainScreen] respondsToSelector:@selector(nativeScale)]) {
-                [[shouldSend objectForKey:@"custom_data"] setObject:@([UIScreen mainScreen].nativeScale) forKey:@"native_scale"];
+                [[shouldSend objectForKey:@"custom_data"] setObject:[NSString stringWithFormat:@"%f",[UIScreen mainScreen].nativeScale] forKey:@"native_scale"];
             }
             if (![shouldSend isEqualToDictionary:bodyData]) {
                 NSLog(@"Change attributes ============ ");
