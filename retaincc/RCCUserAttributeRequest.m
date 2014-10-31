@@ -43,7 +43,7 @@
         [params setObject:self.email forKey:@"email"];
     }
     [params setObject:@"iOS" forKey:@"last_seen_user_agent"];
-    [params setObject:@([[NSDate date] timeIntervalSince1970]) forKey:@"last_impression_at"];
+    [params setObject:[NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSince1970]] forKey:@"last_impression_at"];
     
     NSString *ipAddress = [RCCUserAttributeRequest getIPAddress];
     if (![ipAddress isEqualToString:@"error"]) {
@@ -55,13 +55,13 @@
     [customData setObject:[UIDevice currentDevice].systemName forKey:@"system_name"];
     [customData setObject:[UIDevice currentDevice].model forKey:@"model"];
     [customData setObject:NSStringFromCGSize([UIScreen mainScreen].bounds.size) forKey:@"screen_size"];
-    [customData setObject:@([UIScreen mainScreen].scale) forKey:@"scale"];
+    [customData setObject:[NSString stringWithFormat:@"%f",[UIScreen mainScreen].scale] forKey:@"scale"];
     
     if ([[UIScreen mainScreen] respondsToSelector:@selector(nativeBounds)]) {
         [customData setObject:NSStringFromCGSize([UIScreen mainScreen].nativeBounds.size) forKey:@"native_screen_size"];
     }
     if ([[UIScreen mainScreen] respondsToSelector:@selector(nativeScale)]) {
-        [customData setObject:@([UIScreen mainScreen].nativeScale) forKey:@"native_scale"];
+        [customData setObject:[NSString stringWithFormat:@"%f",[UIScreen mainScreen].nativeScale] forKey:@"native_scale"];
     }
     
     for (NSString *key in self.attributes) {
@@ -72,7 +72,6 @@
             [customData setObject:[self.attributes objectForKey:key] forKey:key];
         }
     }
-    
     NSMutableURLRequest *request = [self authedRequestWithJSON:params];
     [request setURL:[NSURL URLWithString:@"https://app.retain.cc/api/v1/users"]];
     [self sendRequest:request callback:callback];

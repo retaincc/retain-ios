@@ -46,8 +46,11 @@
     return request;
 }
 - (NSMutableURLRequest*)authedRequestWithJSON:(NSDictionary*)json{
-    NSData *data = [NSJSONSerialization dataWithJSONObject:json options:0 error:nil];
-    return [self authedRequestWithBody:data];
+    NSError *error = nil;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:json options:0 error:&error];
+    NSMutableURLRequest *request = [self authedRequestWithBody:data];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    return request;
 }
 
 - (void)sendRequest:(NSURLRequest*)request callback:(void(^)(BOOL success, NSError *error))callback{
