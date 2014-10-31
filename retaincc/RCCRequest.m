@@ -33,6 +33,7 @@
 
 - (NSMutableURLRequest*)authedRequest{
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setHTTPMethod:@"POST"];
     NSString *authString = [NSString stringWithFormat:@"%@:%@", self.appID, self.apiKey];
     NSData *authData = [authString dataUsingEncoding:NSUTF8StringEncoding];
     NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData base64EncodedStringWithOptions:0]];
@@ -56,8 +57,9 @@
                                if (!callback) {
                                    return;
                                }
-                               if (connectionError) {
-                                   NSError *error = [NSError errorWithDomain:@"com.oursky.retaincc" code:((NSHTTPURLResponse*)response).statusCode userInfo:connectionError.userInfo];
+                               NSHTTPURLResponse *httpReponse = (NSHTTPURLResponse*)response;
+                               if (connectionError || httpReponse.statusCode != 200) {
+                                   NSError *error = [NSError errorWithDomain:@"com.oursky.retaincc" code:httpReponse.statusCode userInfo:connectionError.userInfo];
                                    callback(NO, error);
                                } else {
                                    callback(YES, nil);

@@ -120,6 +120,7 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{
+    [super encodeWithCoder:aCoder];
     [aCoder encodeObject:self.attributes forKey:@"attributes"];
 }
 
