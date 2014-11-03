@@ -31,9 +31,36 @@
 }
     ```
 
+#Identifying user
+
+
+
+- For anonymous
+
+    ```objective-c
+    [[RetainCC shared] identifyWithEmail:nil userID:nil]
+    ```
+
+- Logged in user with `email` or `user_id`
+
+    ```objective-c
+    [[RetainCC shared] identifyWithEmail:@"aa@bb.cc" userID:@"12345"]
+    ```
+    - One user at a time
+
+- Change user attribute
+
+    ```objective-c
+    [[RetainCC shared] changeUserAttributes:@{
+        @"some custom key" : @"some custom value"
+    }];
+    ```
+
 #Logging Event
 
 You can log event anywhere in your app like this:
 ```objective-c
 [[RetainCC shared] logEventWithName:@"Clicked" properties:@{@"color":@"red"}];
 ```
+
+Checkout full [JSON API](http://www.retain.cc/api.html)!
