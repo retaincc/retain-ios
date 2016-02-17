@@ -12,7 +12,7 @@
     pod 'RetainCC'
     ```
     
-3. Run `pod install` in your XCode project directory.
+3. Run `pod install` in your Xcode project directory.
 
 4. Then import the library in AppDelegate
 
